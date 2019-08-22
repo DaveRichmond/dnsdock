@@ -19,7 +19,7 @@ docker manifest create ${docker_base}:latest ${latest_images[@]}
 docker tag ${docker_base}:${VERSION} ${docker_base}:latest
 for a in ${ARCHS[@]}
 do
-	docker manifest annotate ${docker_base}:${VERSION} ${docker_base}:${VERSION}-${a} --arch ${a}
+	docker manifest annotate ${docker_base}:${VERSION} ${docker_base}:${VERSION}-${a} --arch ${a} --os linux
 	docker manifest annotate ${docker_base}:latest ${docker_base}:latest-${a} --arch ${a}
 	echo "docker push ${docker_base}:latest-${a}" >> /tmp/deploy_containers.sh
 done

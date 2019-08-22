@@ -1,1 +1,1 @@
-ARCHS=(amd64 arm32v6 arm64v8)
+ARCHS=(amd64 arm arm64)

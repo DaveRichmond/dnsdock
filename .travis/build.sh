@@ -4,13 +4,7 @@ PLATFORM=${PLATFORM:-amd64}
 USER=${DOCKER_USER:-aacebedo}
 IMAGE=${IMAGE:-dnsdock}
 
-case $PLATFORM in
-	arm64v8) DOCKER_PLATFORM=arm64 ;;
-	arm32v6) DOCKER_PLATFORM=arm ;;
-	*) DOCKER_PLATFORM=${PLATFORM} ;;
-esac
-
-echo "Building image for ${PLATFORM} (${DOCKER_PLATFORM})"
+echo "Building image for ${PLATFORM}"
 
 if git describe --contains ${TRAVIS_COMMIT} &>/dev/null
 then
@@ -19,7 +13,7 @@ else
 	VERSION="dev"
 fi
 buildctl build --frontend dockerfile.v0 \
-        --opt platform=linux/${DOCKER_PLATFORM} \
+        --opt platform=linux/${PLATFORM} \
         --output type=image,name="docker.io/${USER}/${IMAGE}:${VERSION}-${PLATFORM}",push=true \
         --local dockerfile=. \
         --local context=.
