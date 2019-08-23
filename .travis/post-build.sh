@@ -22,12 +22,11 @@ done
 
 docker manifest create ${docker_base}:${VERSION} ${images[@]}
 post docker manifest create ${docker_base}:latest ${latest_images[@]}
-docker tag ${docker_base}:${VERSION} ${docker_base}:latest
 for a in ${ARCHS[@]}
 do
 	docker manifest annotate ${docker_base}:${VERSION} ${docker_base}:${VERSION}-${a} --arch ${a} --os linux
 	post docker manifest annotate ${docker_base}:latest ${docker_base}:latest-${a} --arch ${a} --os linux
 done
 
-docker push ${docker_base}:${VERSION}
-post docker push ${docker_base}:latest
+docker manifest push ${docker_base}:${VERSION}
+post docker manifest push ${docker_base}:latest
